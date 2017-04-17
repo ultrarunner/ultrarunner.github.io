@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard-component';
     template: ''
 })
 export class DashboardComponentOutlet implements DashboardComponent, OnChanges {
+
     @Input() title: string;
     @Input() end_point: string;
     @Input() count: number;

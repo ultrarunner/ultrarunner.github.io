@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MasonryModule } from 'angular2-masonry';
 
 import { Dashboard } from './dashboard/dashboard';
 import { DashboardComponentRss } from './dashboard/dashboard-component-rss';
@@ -36,6 +37,7 @@ import { SimpleDialogComponent } from './shared/simple-dialog/simple-dialog.comp
     BrowserModule,
     FormsModule,
     HttpModule,
+    MasonryModule,
 
     MaterialModule.forRoot(),
     BrowserAnimationsModule,

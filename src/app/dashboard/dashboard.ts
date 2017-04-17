@@ -1,25 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { DashboardComponentRss } from "./dashboard-component-rss";
-//import {DashboardComponentB} from "./dashboard-component-nyt";
+import { AngularMasonry, MasonryOptions } from 'angular2-masonry';
 
 @Component({
     selector: 'dashboard',
     template: `
-        <div fxLayout="row" fxLayoutAlign="space-around" fxLayoutWrap="wrap">    
-            <div *ngFor="let info of componentInfos" 
-                fxFlex="100" 
-                fxFlex.gt-xs="49.5" 
-                fxFlex.gt-sm="33" 
-                fxFlex.gt-md="25" style="margin-bottom: 5px;">
-                <dashboard-component-outlet
+        <masonry style="margin:0 auto;">
+            <dashboard-component-outlet *ngFor="let info of componentInfos"
                     [type]="info.type" 
                     [title]="info.title" 
                     [end_point]="info.end_point"
                     [count]="info.count"
                     (selected)="select($event)">
-                </dashboard-component-outlet>
-            </div>
-        </div>
+              </dashboard-component-outlet>
+        </masonry>
         <div class="col-sm-12">&nbsp;</div>
 
         <div *ngIf="selectedComponent" class="col-sm-12">
@@ -28,7 +22,19 @@ import { DashboardComponentRss } from "./dashboard-component-rss";
     `
 })
 
-export class Dashboard {
+export class Dashboard implements AfterViewInit{
+    @ViewChild(AngularMasonry) masonry: AngularMasonry;
+
+    options: MasonryOptions = {
+        transitionDuration: '0.35'
+        //fitWidth: true
+    };
+
+    ngAfterViewInit() {
+        this.masonry.layoutComplete.subscribe(() => {
+            console.log('layout');
+        });
+    }
 
     private componentInfos = [
         {

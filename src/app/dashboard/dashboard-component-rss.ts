@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { DashboardComponent } from './dashboard-component';
 import { FeedService } from '../feed.service';
 import { FeedInfo } from '../model/feed-info';
@@ -9,9 +9,9 @@ import { DialogService } from '../shared/simple-dialog/dialog.service';
 @Component({
   selector: 'component-rss',
   template: `
-      <md-card>
+      <md-card masonry-brick style="min-width: 280px; max-width: 402px;">
         <md-card-header *ngIf="items.length">
-          <md-card-title>{{feed.title}} <font color="red">|</font> {{feed.author}}</md-card-title>
+          <md-card-title><img src="{{feed.image}}" style="width: 30px;" ng-if="feed.image != ''"/> {{feed.title}} <font color="red">|</font> {{feed.author}}</md-card-title>
           <md-card-subtitle>{{feed.description}} </md-card-subtitle>
         </md-card-header>
         <md-card-content *ngIf="!items.length">
@@ -20,7 +20,7 @@ import { DialogService } from '../shared/simple-dialog/dialog.service';
         </md-card-content>
         <md-card-content *ngIf="items.length">
           <md-list-item *ngFor="let item of items">
-            <button md-icon-button (click)="openDialog(item.title, item.description)">
+            <button md-icon-button (click)="openDialog(item)">
               <md-icon>info</md-icon>
             </button>
             {{item.title}}
@@ -70,9 +70,10 @@ export class DashboardComponentRss implements DashboardComponent {
       );
   }
 
-  openDialog(title: string, message: string) {
-    console.log(message);
-    this.dialogService.confirm(title, message);
+  openDialog(feedEntry: FeedEntry) {
+    console.log(feedEntry);
+    var title = feedEntry.title + " | " + feedEntry.pubDate;
+    this.dialogService.confirm(title, feedEntry.description);
   }
 
   onSelected() {
@@ -80,6 +81,6 @@ export class DashboardComponentRss implements DashboardComponent {
   }
 
   onOpenLink() {
-    window.open(this.end_point, '_blank');
+    window.open(this.feed.link, '_blank');
   }
 }
