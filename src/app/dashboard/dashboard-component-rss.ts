@@ -9,7 +9,7 @@ import { DialogService } from '../shared/simple-dialog/dialog.service';
 @Component({
   selector: 'component-rss',
   template: `
-      <md-card masonry-brick style="min-width: 280px; max-width: 402px;">
+      <md-card masonry-brick style="width: 280px; margin: 5px;">
         <md-card-header *ngIf="items.length">
           <md-card-title><img src="{{feed.image}}" style="width: 30px;" ng-if="feed.image != ''"/> {{feed.title}} <font color="red">|</font> {{feed.author}}</md-card-title>
           <md-card-subtitle>{{feed.description}} </md-card-subtitle>

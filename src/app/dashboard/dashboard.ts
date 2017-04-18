@@ -5,17 +5,15 @@ import { AngularMasonry, MasonryOptions } from 'angular2-masonry';
 @Component({
     selector: 'dashboard',
     template: `
-        <masonry style="margin:0 auto;">
+        <masonry style="margin: 0 auto;">
             <dashboard-component-outlet *ngFor="let info of componentInfos"
-                    [type]="info.type" 
-                    [title]="info.title" 
-                    [end_point]="info.end_point"
-                    [count]="info.count"
-                    (selected)="select($event)">
-              </dashboard-component-outlet>
+                [type]="info.type" 
+                [title]="info.title" 
+                [end_point]="info.end_point"
+                [count]="info.count"
+                (selected)="select($event)">
+            </dashboard-component-outlet>
         </masonry>
-        <div class="col-sm-12">&nbsp;</div>
-
         <div *ngIf="selectedComponent" class="col-sm-12">
             <b>Selected: </b> {{ selectedComponent.title }} | {{ selectedComponent.end_point }} | {{ selectedComponent.count }}
         </div>
@@ -26,8 +24,10 @@ export class Dashboard implements AfterViewInit{
     @ViewChild(AngularMasonry) masonry: AngularMasonry;
 
     options: MasonryOptions = {
-        transitionDuration: '0.35'
-        //fitWidth: true
+        transitionDuration: '0.35',
+        fitWidth: true,
+        gutter: 5,
+        percentPosition: true
     };
 
     ngAfterViewInit() {
