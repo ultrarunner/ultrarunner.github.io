@@ -1,0 +1,12 @@
+md-dialog-container.mat-dialog-container {
+    background-color: whitesmoke;
+}
+
+md-dialog-container h2.mat-dialog-title {
+    font-family: Verdana;
+}
+
+md-dialog-content.mat-dialog-content {
+    font-family: Verdana;
+    font-size: 12px;
+}
