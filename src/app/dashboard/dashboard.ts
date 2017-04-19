@@ -32,7 +32,7 @@ export class Dashboard implements AfterViewInit{
 
     ngAfterViewInit() {
         this.masonry.layoutComplete.subscribe(() => {
-            console.log('layout');
+            console.log('masonry layout complete.');
         });
     }
 
@@ -60,7 +60,14 @@ export class Dashboard implements AfterViewInit{
             title: '4th Component - Adventures in Angular',
             end_point: 'https://feeds.feedwrench.com/AdventuresInAngular.rss',
             count: 10
+        },
+        {
+            type: DashboardComponentRss,
+            title: 'Scott Hanselman\'s blog',
+            end_point: 'http://feeds.hanselman.com/scotthanselman',
+            count: 4
         }
+        
     ];
 
     selectedComponent: Dashboard;

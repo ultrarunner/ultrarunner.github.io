@@ -3,15 +3,17 @@ import { DashboardComponent } from './dashboard-component';
 import { FeedService } from '../feed.service';
 import { FeedInfo } from '../model/feed-info';
 import { FeedEntry } from '../model/feed-entry';
+import { FeedEnclosure } from '../model/feed-enclosure';
 
 import { DialogService } from '../shared/simple-dialog/dialog.service';
 
 @Component({
   selector: 'component-rss',
   template: `
-      <md-card masonry-brick style="width: 280px; margin: 5px;">
+      <md-card masonry-brick style="min-width: 280px; max-width: 320px; margin: 5px;">
         <md-card-header *ngIf="items.length">
-          <md-card-title><img src="{{feed.image}}" style="width: 30px;" ng-if="feed.image != ''"/> {{feed.title}} <font color="red">|</font> {{feed.author}}</md-card-title>
+          <div md-card-avatar *ngIf="feed.image!=''"><img src="{{feed.image}}" style="width: 30px;"/></div>
+          <md-card-title>{{feed.title}} <font color="red">|</font> {{feed.author}}</md-card-title>
           <md-card-subtitle>{{feed.description}} </md-card-subtitle>
         </md-card-header>
         <md-card-content *ngIf="!items.length">
@@ -19,11 +21,14 @@ import { DialogService } from '../shared/simple-dialog/dialog.service';
           Loading data from... {{end_point}}
         </md-card-content>
         <md-card-content *ngIf="items.length">
-          <md-list-item *ngFor="let item of items">
-            <button md-icon-button (click)="openDialog(item)">
+          <md-list-item *ngFor="let item of items">         
+            <button md-icon-button (click)="openDialog(item)" mdTooltip="Play Audio">
               <md-icon>info</md-icon>
             </button>
-            {{item.title}}
+            <button mdTooltip="View Description" md-icon-button *ngIf="item.enclosure.type != null" (click)="onPlay(item.enclosure)">
+              <md-icon>play_circle_filled</md-icon>
+            </button>            
+            {{item.title}}             
           </md-list-item>
         </md-card-content>
         <md-card-actions style="text-align: right;">
@@ -63,8 +68,9 @@ export class DashboardComponentRss implements DashboardComponent {
       .delay(1000)
       .subscribe(
       result => {
+        console.log(result.items);
         this.feed = result.feed,
-          this.items = result.items.filter((item, index) => { return index < this.count; });
+        this.items = result.items.filter((item, index) => { return index < this.count; });
       },
       error => console.log(error)
       );
@@ -74,6 +80,10 @@ export class DashboardComponentRss implements DashboardComponent {
     console.log(feedEntry);
     var title = feedEntry.title + " | " + feedEntry.pubDate;
     this.dialogService.confirm(title, feedEntry.description);
+  }
+
+  onPlay(enclosure: FeedEnclosure){
+    console.log(enclosure.link);
   }
 
   onSelected() {

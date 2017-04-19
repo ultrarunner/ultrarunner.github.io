@@ -1,3 +1,5 @@
+import { FeedEnclosure } from './feed-enclosure';
+
 export interface FeedEntry {
   title: string;
   link: string;
@@ -8,4 +10,5 @@ export interface FeedEntry {
   thumbnail: string;
   description: string;
   content: string;
+  enclosure: FeedEnclosure;
 }
